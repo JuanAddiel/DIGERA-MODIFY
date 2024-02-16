@@ -1,0 +1,123 @@
+body {
+    background: url("Pantalla/Images/HOM1.jpg") top right no-repeat fixed;
+    background-size: cover;
+    color: #343a40;
+    margin: 0;
+    opacity: 0.9;
+}
+
+
+
+
+h2 {
+    color: #E19247;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.bienvenida {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+}
+
+.card-text {
+    text-align: center;
+    margin-bottom: 15px;
+
+}
+
+/*Para la barra lateral */
+.sidebar {
+    background-color: #ebebeb;
+    border-radius: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    height: 100vh;
+    /* Altura completa del viewport */
+    position: fixed;
+    /* Barra lateral fija */
+    top: 0;
+    /* Comienza en la parte superior */
+    left: 0;
+    /* Comienza en el lado izquierdo */
+    width: 250px;
+    /* Ancho de la barra lateral */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-btn {
+    margin-top: 20px;
+    margin-right: 30px;
+
+
+}
+
+.sidebar-logo img {
+    max-width: 90%;
+    height: auto;
+    margin-bottom: 90px;
+
+}
+
+.main-content {
+    /* Margen izquierdo para dejar espacio a la barra lateral */
+    margin-left: 290px;
+    padding: 20px;
+}
+
+.ingresar-btn {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    /* Alinea horizontalmente el contenido */
+}
+
+.card-title {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.btn-ingresar {
+    background-color: #22A030;
+    color: #fff;
+}
+
+.btn-salir {
+    background-color: #E19247;
+    color: #fff;
+    width: 150px;
+    /* Ajusta el ancho según tus preferencias */
+}
+
+.btn-ingresar {
+    width: 150px;
+}
+
+.btn-lg {
+    padding: 10px 20px;
+    font-size: 1.25rem;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+
+    /* Estilos específicos para dispositivos con una anchura máxima de 768px */
+    .sidebar {
+        width: 100%;
+        /* Cambiar el ancho de la barra lateral para pantallas más pequeñas */
+    }
+
+    .main-content {
+        margin-left: 0;
+        /* Eliminar el margen izquierdo en dispositivos más pequeños */
+    }
+}

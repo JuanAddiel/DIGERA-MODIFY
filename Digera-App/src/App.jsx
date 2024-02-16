@@ -1,3 +1,7 @@
+import { Buttons } from "./components/Buttons";
+import { CheckBox } from "./components/CheckBox";
+import { Inputs } from "./components/Inputs";
+
 export const App = () => {
   return (
     <section className="vh-100 image-opacity ">
@@ -17,55 +21,30 @@ export const App = () => {
                 />
                 <form className="">
                   <div className="row justify-content-center">
-                    <div className="col-md-11 animate__animated animate__zoomIn">
-                      <div className="form-floating">
-                        <input
-                          type="text"
-                          className="form-control form-control-lg"
-                          id="floatingInput"
-                          placeholder="Username"
-                        />
-                        <label htmlFor="floatingInput">Username</label>{" "}
-                        {/* Usa htmlFor en lugar de for */}
-                      </div>
-                    </div>
-                    <div className="col-md-11 m-3 animate__animated animate__zoomIn">
-                      <div className="form-floating">
-                        <input
-                          type="password"
-                          className="form-control form-control-lg"
-                          id="floatingPassword"
-                          placeholder="Password"
-                        />
-                        <label htmlFor="floatingPassword">Password</label>{" "}
-                        {/* Usa htmlFor en lugar de for */}
-                      </div>
-                    </div>
-                    <div className="col-md-11 animate__animated animate__zoomIn">
-                      <div className="form-check text-start my-3">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          value="remember-me"
-                          id="flexCheckDefault"
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor="flexCheckDefault"
-                        >
-                          Remember me
-                        </label>{" "}
-                        {/* Usa htmlFor en lugar de for */}
-                      </div>
-                    </div>
-                    <div className="col-md-11">
-                      <button
-                        className="btn btn-success w-100 py-2 animate__animated animate__zoomIn"
-                        type="submit"
-                      >
-                        Sign in
-                      </button>
-                    </div>
+                    <Inputs
+                      animated={"animate__animated animate__zoomIn"}
+                      id={"user"}
+                      type={"text"}
+                      htmlFor={"user"}
+                      placeholder={"Username"}
+                      showLabel={"Username"}
+                    />
+                    <Inputs
+                      animated={"animate__animated animate__zoomIn"}
+                      id={"password"}
+                      type={"password"}
+                      htmlFor={"password"}
+                      placeholder={"Password"}
+                      showLabel={"Password"}
+                    />
+                    <CheckBox 
+                    animated={"animate__animated animate__zoomIn"}
+                    id={"checkbox"}
+                    showLabel={"Remember me"}
+                    type={"checkbox"}
+                    value={"remember-me"}
+                    />
+                    <Buttons text="Send" />
                   </div>
                 </form>
               </div>

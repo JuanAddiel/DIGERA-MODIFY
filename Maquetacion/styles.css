@@ -1,13 +1,8 @@
 body {
-    background: url("Pantalla/Images/HOM1.jpg") top right no-repeat fixed;
+    background: url('./assets/Images/Home.png') top right no-repeat fixed;
     background-size: cover;
-    color: #343a40;
     margin: 0;
-    opacity: 0.9;
 }
-
-
-
 
 h2 {
     color: #E19247;
@@ -26,12 +21,11 @@ h2 {
 .card-text {
     text-align: center;
     margin-bottom: 15px;
-
 }
 
-/*Para la barra lateral */
+/* Para la barra lateral */
 .sidebar {
-    background-color: #ebebeb;
+    background-color: #FFF;
     border-radius: 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -49,26 +43,52 @@ h2 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 100;
+
 }
+
+.sidebar.active {
+    left: 0; /* Muestra el sidebar al establecer el margen izquierdo en 0 */
+}
+
+.btn-menu {
+    position: fixed;
+    background-color: #E19247;
+    top: 20px;
+    left: 20px;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.menu-bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin-bottom: 6px;
+    border-radius: 10px;
+}
+
+/* Ajustes de las barras del menú */
+.menu-bar:last-child {
+    margin-bottom: 0;
+}
+
 
 .sidebar-btn {
     margin-top: 20px;
     margin-right: 30px;
-
-
 }
 
 .sidebar-logo img {
     max-width: 90%;
     height: auto;
     margin-bottom: 90px;
-
 }
 
-.main-content {
-    /* Margen izquierdo para dejar espacio a la barra lateral */
-    margin-left: 290px;
-    padding: 20px;
+.row {
+    justify-content: center;
 }
 
 .ingresar-btn {
@@ -104,20 +124,16 @@ h2 {
     font-size: 1.25rem;
 }
 
-
-
-
-
 @media (max-width: 768px) {
-
-    /* Estilos específicos para dispositivos con una anchura máxima de 768px */
-    .sidebar {
-        width: 100%;
-        /* Cambiar el ancho de la barra lateral para pantallas más pequeñas */
-    }
-
     .main-content {
         margin-left: 0;
         /* Eliminar el margen izquierdo en dispositivos más pequeños */
+    }
+}
+
+@media (max-width: 1050px) {
+    /* Ocultar el sidebar y el botón del menú en dispositivos con un ancho menor a 1050px */
+    .sidebar, .btn-menu {
+        display: none;
     }
 }

@@ -6,19 +6,25 @@
   "type": "commonjs",
   "scripts": {
     "dev": "nodemon ./src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "upDb": "npx prisma introspect"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.9.1",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.4",
     "env-var": "^7.4.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.9",
     "serve-static": "^1.15.0",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "prisma": "^5.9.1"
   }
 }

@@ -1,6 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const router= require("./routes/routes");
+const DefaultRole = require("./SEED/DefaultRole");
 const app = express();
 
 dotenv.config();
@@ -12,11 +14,7 @@ app.use(
     origin: "*",
   })
 );
-
-app.get("/api", (req, res,next) => {
-  // Envía un objeto JSON como respuesta al cliente
-  res.json({ message: "Hello world" });
-});
+app.use("/api",router);
 
 // app.use(
 //   serveStatic(__dirname + "/public", {
@@ -24,8 +22,8 @@ app.get("/api", (req, res,next) => {
 //   })
 // );
 
-if (process.env.BOOTSTRAP === "true") {
-  BootsTrapService.init();
+if (process.env.SEED === "true") {
+  DefaultRole();
 }
 
 module.exports = app;

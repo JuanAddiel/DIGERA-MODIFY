@@ -26,25 +26,25 @@ export const App = () => {
                       id={"user"}
                       type={"text"}
                       htmlFor={"user"}
-                      placeholder={"Username"}
-                      showLabel={"Username"}
+                      placeholder={"Nombre Usuario"}
+                      showLabel={"Nombre Usuario"}
                     />
                     <Inputs
                       animated={"animate__animated animate__zoomIn"}
                       id={"password"}
                       type={"password"}
                       htmlFor={"password"}
-                      placeholder={"Password"}
-                      showLabel={"Password"}
+                      placeholder={"Contraseña"}
+                      showLabel={"Contraseña"}
                     />
-                    <CheckBox 
-                    animated={"animate__animated animate__zoomIn"}
-                    id={"checkbox"}
-                    showLabel={"Remember me"}
-                    type={"checkbox"}
-                    value={"remember-me"}
+                    <CheckBox
+                      animated={"animate__animated animate__zoomIn"}
+                      id={"checkbox"}
+                      showLabel={"Recuerdame"}
+                      type={"checkbox"}
+                      value={"Recuerdame"}
                     />
-                    <Buttons text="Send" />
+                    <Buttons text="Iniciar Seccion" />
                   </div>
                 </form>
               </div>

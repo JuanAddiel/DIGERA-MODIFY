@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SOY DIGERA</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="shortcut icon" href="Maquetacion/assets/Images/logo-desktop.png" type="image/x-icon">
-
+    <link rel="shortcut icon" href="./assets/Images/logo-desktop.png" type="image/x-icon">
 </head>
+<body class="bg-image" >
+    <div class="row w-100">
+                        
+        <button type="button" class="btn btn-menu">
+            <span class="navbar-toggler-icon">
+                <span class="menu-bar"></span>
+                <span class="menu-bar"></span>
+                <span class="menu-bar"></span>
+            </span>
+        </button>
 
-<body>
-
-    <div class="row">
-        <div class="col-md-3">
-            <nav class="sidebar">
-                <div class="sidebar-logo">
-                    <img src="Maquetacion/assets/Images/logo-desktop.png" alt="Logo de la empresa" class="img-fluid">
+        <div class="col-md-3 d-none">
+            <nav id="sidebar" class="sidebar active " >
+                <div class="sidebar-logo text-center">
+                    <img src="./assets/Images/logo-desktop.png" alt="Logo de la empresa" class="img-fluid">
                 </div>
-                <button type="button" class="btn btn btn-ingresar btn-salir sidebar-btn">Salir</button>
+                <button type="button" class="btn btn btn-ingresar btn-salir sidebar-btn mx-auto">Salir</button>
             </nav>
         </div>
-
-
-        <div class="col-md-9 main-content">
-            <div class="bienvenida">
+        
+        <div class="col-md-9 mt-5 bg-color">
+            <div class="bienvenida mb-5">
                 <h2>Bienvenido Juan Perez Lebron!</h2>
-                <p>Acceda a Nuestros Sistemas</p>
+                <h3>Acceda a Nuestros Sistemas</h3>
             </div>
 
             <div class="row">
@@ -104,11 +108,9 @@
         </div>
     </div>
 
-    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script src="assets/js/Inicio.js"></script>
 </body>
-
 </html>

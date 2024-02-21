@@ -8,6 +8,7 @@ h2 {
     color: #E19247;
 }
 
+
 .container {
     margin-top: 50px;
 }
@@ -48,7 +49,8 @@ h2 {
 }
 
 .sidebar.active {
-    left: 0; /* Muestra el sidebar al establecer el margen izquierdo en 0 */
+    left: 0;
+    /* Muestra el sidebar al establecer el margen izquierdo en 0 */
 }
 
 .btn-menu {
@@ -124,16 +126,41 @@ h2 {
     font-size: 1.25rem;
 }
 
-@media (max-width: 768px) {
-    .main-content {
-        margin-left: 0;
-        /* Eliminar el margen izquierdo en dispositivos más pequeños */
-    }
-}
-
 @media (max-width: 1050px) {
-    /* Ocultar el sidebar y el botón del menú en dispositivos con un ancho menor a 1050px */
-    .sidebar, .btn-menu {
-        display: none;
+
+    /* Utilizar flexbox para acomodar el sidebar y el botón del menú al lado del mensaje de bienvenida */
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
     }
+
+    .bienvenida,
+    .sidebar,
+    .btn-menu,
+    .col-md-4 {
+        box-sizing: border-box;
+        flex-grow: 1;
+    }
+
+    .btn-menu {
+        order: 2;
+        margin-left: 82%;
+        /* Ajustar el margen izquierdo según sea necesario o dejarlo en 0 para alinearlo a la izquierda */
+        margin-top: 30px;
+        /* Mueve el botón hacia abajo */
+
+
+    }
+
+    .col-md-4 {
+        margin-left: 30px;
+        /* Ajustar el margen izquierdo según sea necesario o dejarlo en 0 para alinearlo a la izquierda */
+        width: 100%;
+        /* Hacer que las cards ocupen el ancho completo del contenedor */
+
+    }
+
+
 }

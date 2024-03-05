@@ -1,36 +1,29 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { loginRequest, verityTokenRequest } from "../api/login/register";
+import { set, useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import LogoImage from "/logo-desktop.png"; 
+
+import LogoImage from "/logo-desktop.png";
+
 
 export const Login = () => {
-  const { register, handleSubmit } = useForm();
-  const {
-    signIn,
-    errors: loginError,
-    isAuthenticated,
-    loading,
-    setUser,
-    setIsAuthenticated,
-  } = useAuth();
   const navigate = useNavigate();
-  const onSubmit = handleSubmit(async (values) => {
+  const { register, handleSubmit } = useForm();
+  const { signIn, errors: loginError, isAuthenticated,loading} = useAuth();
+  const onSubmit = handleSubmit( (values) => {
     try {
-      await signIn(values);
+       signIn(values);
+ 
     } catch (error) {
-      // Manejar el error y establecer el mensaje de error en el estado
     }
   });
- useEffect(() => {
-   if (isAuthenticated) {
-     navigate("/menu");
-   }
- }, [isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/menu");
+    }
+  }, [isAuthenticated]);
 
-
+ 
   return (
     <section className="h-screen flex items-center justify-center image-opacity">
       <div className="max-w-lg md:max-w-sm md:w-11/12 p-16 bg-white shadow-lg rounded-lg md:py-28 animate__animated animate__fadeInDown">

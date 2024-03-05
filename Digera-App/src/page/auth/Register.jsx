@@ -28,11 +28,7 @@ export const Register = () => {
             alt="Logo"
           />
         </div>
-        {
-            errors != null ?
-          <div className="bg-red-500 p-2 text-white" >
-            {errors}
-          </div> : ""}
+        {errors && <div className="bg-red-500 p-2 text-white">{errors}</div>}
         <form method="post" onSubmit={onSubmit}>
           <div className="mb-4">
             <input

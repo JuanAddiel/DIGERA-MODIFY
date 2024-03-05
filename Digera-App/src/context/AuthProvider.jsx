@@ -6,27 +6,26 @@ import {
 } from "../api/login/register";
 import Cookies from "js-cookie";
 
-export const AuthContext = createContext({});
+const AuthContext = createContext();
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an authProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within a AuthProvider");
   return context;
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setError] = useState(null);
 
   const signUp = async (user) => {
     try {
       const res = await registerRequest(user);
-      setUser(res.data);
+
       setIsAuthenticated(true);
     } catch (error) {
+      console.log(error);
       setError(error.response.data.message);
     }
   };
@@ -34,16 +33,17 @@ export const AuthProvider = ({ children }) => {
   const signIn = async (user) => {
     try {
       const res = await loginRequest(user);
-      setUser(res.data);
+      setLoading(false);
+
       setIsAuthenticated(true);
     } catch (error) {
       setError(error.response.data.message);
-    }
+    } // Puedes ajustar el tiempo en milisegundos según tus necesidades
   };
 
   const logout = () => {
     Cookies.remove("token");
-    setUser(null);
+    localStorage.removeItem("user");
     setIsAuthenticated(false);
   };
 
@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }) => {
       const errorTimeout = setTimeout(() => {
         setError(null);
       }, 5000);
+
       return () => clearTimeout(errorTimeout);
     }
   }, [errors]);
@@ -59,22 +60,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkLogin = async () => {
       const token = Cookies.get("token");
-      if (token) {
-        try {
-          const res = await verityTokenRequest(token);
-          if (res.data) {
-            setUser(res.data);
-            setIsAuthenticated(true);
-          } else {
-            setIsAuthenticated(false);
-            setUser(null);
-          }
-        } catch (error) {
-          setIsAuthenticated(false);
-          setUser(null);
-          setError("Error verifying token");
-        }
-      }
+      const res = await verityTokenRequest(token);
+      localStorage.setItem("user", JSON.stringify(res.data));
+      setIsAuthenticated(true);
     };
 
     checkLogin();
@@ -85,12 +73,10 @@ export const AuthProvider = ({ children }) => {
       value={{
         signUp,
         signIn,
-        user,
         isAuthenticated,
         errors,
         logout,
-        setUser,
-        setIsAuthenticated,
+        loading,
       }}
     >
       {children}

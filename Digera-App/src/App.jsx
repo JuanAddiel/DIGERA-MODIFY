@@ -1,11 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
-import { Login } from "./components/Login";
-import Layaout from "./layouts/Layaout";
-import { Register } from "./page/auth/Register";
-import ProtectedRoute from "./ProtectedRoute";
-import { RequireAuth } from "./components/RequireAuth";
-import { useAuth } from "./context/AuthProvider";
-
+import {Outlet } from "react-router-dom";
 const ROLES = {
   ADMIN: 1,
   BASIC: 3,
@@ -14,17 +7,9 @@ const ROLES = {
 
 export const App = () => {
   return (
-    <Routes>
-      {/* Página de autenticación */}
-      
-      <Route element={<ProtectedRoute allowedRole={[ROLES.ADMIN, ROLES.BASIC]}/>}>
-      <Route path="/menu" element={<Layaout />} />
+    <>
+        <Outlet />
 
-      </Route>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      {/* Página para usuarios no autorizados */}
-      <Route path="/unauthorized" element={<>Nothing</>} />
-    </Routes>
+    </>
   );
 };

@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthProvider";
+import { ToastContainer } from "react-toastify";
 
 const ProtectedRoute = ({ allowedRole }) => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -11,11 +12,10 @@ const ProtectedRoute = ({ allowedRole }) => {
 
    const isAuthorized = allowedRole.includes(user?.role);
 
-  return isAuthorized ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/unauthorized" state={{ from: location }} replace />
-  );
+  return(
+      
+      <Outlet />
+       );
 };
 
 export default ProtectedRoute;

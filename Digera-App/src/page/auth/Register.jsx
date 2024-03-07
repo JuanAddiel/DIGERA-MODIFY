@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom"
 
 
@@ -8,7 +7,6 @@ export const Register = () => {
   const navigation = useNavigate();
 
   const { register, handleSubmit,  } = useForm();
-  const {signUp,isAuthenticated, errors} = useAuth();
   
     // useEffect(()=>{
     //     if(isAuthenticated)navigation("/")

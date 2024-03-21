@@ -9,7 +9,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("userInfo"))
     : null,
   token: null,
-  logout:null
+  logout:null,
 };
 
 const authSlice = createSlice({

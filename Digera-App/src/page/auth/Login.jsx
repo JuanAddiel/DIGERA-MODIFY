@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LogoImage from "/logo-desktop.png";
+import LogoImage from "/assets/logo-desktop.png";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation, useVerifyTokenMutation } from "../../slices/usersApiSlice";
-import { setCredentials, setToken } from "../../slices/authSlice";
+import { useLoginMutation, useVerifyTokenMutation } from "../../slices/Auth/usersApiSlice";
+import { setCredentials, setToken } from "../../slices/Auth/authSlice";
 import { HiX } from "react-icons/hi";
 import { Toast } from "flowbite-react";
 import Cookies from "js-cookie";
@@ -21,7 +21,7 @@ export const Login = () => {
 
   useEffect(()=>{
     if(userInfo){
-      navigate('/menu');
+      navigate('/poliza');
     }
   },[navigate, userInfo]);
 

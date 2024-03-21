@@ -8,16 +8,16 @@ import Layaout from "../layouts/Layaout";
 import Login from "../page/auth/Login";
 import { Register } from "../page/auth/Register";
 import { App } from "../App";
+import { Poliza } from "../page/SisGepol/Poliza";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App/>}>
-
-      <Route path="/menu" element={<Layaout />} />
+    <Route path="/" element={<App />}>
 
       <Route index={true} path="/" element={<Login />} />
 
       <Route path="/register" element={<Register />} />
+      <Route path="/poliza" element={<Poliza />} />
 
       <Route path="/unauthorized" element={<>Nothing</>} />
     </Route>

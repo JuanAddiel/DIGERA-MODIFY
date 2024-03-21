@@ -1,4 +1,6 @@
 import {Outlet } from "react-router-dom";
+import Layaout from "./layouts/Layaout";
+import { useSelector } from "react-redux";
 const ROLES = {
   ADMIN: 1,
   BASIC: 3,
@@ -6,9 +8,12 @@ const ROLES = {
 
 
 export const App = () => {
+    const { userInfo } = useSelector((state) => state.auth);
+
   return (
     <>
-        <Outlet />
+        {userInfo === null ?<Outlet/>: <Layaout/>}
+       
 
     </>
   );

@@ -1,18 +1,21 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLogoutSessionMutation } from "../slices/usersApiSlice";
+import { useLogoutSessionMutation } from "../slices/Auth/usersApiSlice";
 import Cookies from "js-cookie";
-import { setLogout } from "../slices/authSlice";
-  const logo = "https://flowbite.com/docs/images/logo.svg";
+import { setLogout } from "../slices/Auth/authSlice";
+import logo from "/assets/logo-desktop.png";
+import { ListaMenu } from "../components/ListaMenu";
+
+
 
 
 const Layaout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const subMenuSisgepol = ["Inicio", "Poliza"];
   const { userInfo } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-
   const [logoutSession, { loading }] = useLogoutSessionMutation();
   const navigate = useNavigate();
 
@@ -27,15 +30,16 @@ const Layaout = () => {
     if (userInfo == null) {
       navigate("/");
     }
-  }, [userInfo==null]);
-  const handleClick =async()=>{
+  }, [navigate,userInfo]);
+
+  const handleClick = async () => {
     await logoutSession();
     dispatch(setLogout({}));
-  }
+  };
   return (
     <>
       <>
-        <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <nav className="fixed top-0 z-50 w-full bg-aquamarine-600  border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
           <div className="px-3 py-3 lg:px-5 lg:pl-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-start rtl:justify-end">
@@ -44,7 +48,7 @@ const Layaout = () => {
                   data-drawer-toggle="logo-sidebar"
                   aria-controls="logo-sidebar"
                   type="button"
-                  className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                  className="inline-flex items-center p-2 text-sm text-white rounded-lg sm:hidden focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                   onClick={toggleSidebar}
                 >
                   <span className="sr-only">Open sidebar</span>
@@ -63,58 +67,7 @@ const Layaout = () => {
                   </svg>
                 </button>
                 <a href="https://flowbite.com" className="flex ms-2 md:me-24">
-                  <img
-                    src={logo}
-                    className="h-8 me-3"
-                    alt="FlowBite Logo"
-                  />
-                  <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                    Flowbite
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </nav>
-        <div className="p-4 sm:ml-64">
-          <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14"></div>
-        </div>{" "}
-        <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-          <div className="px-3 py-3 lg:px-5 lg:pl-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center justify-start rtl:justify-end">
-                <button
-                  data-drawer-target="logo-sidebar"
-                  data-drawer-toggle="logo-sidebar"
-                  aria-controls="logo-sidebar"
-                  type="button"
-                  className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                  onClick={toggleSidebar}
-                >
-                  <span className="sr-only">Open sidebar</span>
-                  <svg
-                    className="w-6 h-6"
-                    aria-hidden="true"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      clipRule="evenodd"
-                      fillRule="evenodd"
-                      d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                    ></path>
-                  </svg>
-                </button>
-                <a href="https://flowbite.com" className="flex ms-2 md:me-24">
-                  <img
-                    src="https://flowbite.com/docs/images/logo.svg"
-                    className="h-8 me-3"
-                    alt="FlowBite Logo"
-                  />
-                  <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                    Flowbite
-                  </span>
+                  <img src={logo} className="h-8 me-3" alt="FlowBite Logo" />
                 </a>
               </div>
               <div className="relative">
@@ -125,16 +78,18 @@ const Layaout = () => {
                   onClick={toggleMenu}
                 >
                   <svg
-                    className="w-[33px] h-[33px] text-white-800 "
+                    className="w-7 h-7 text-white dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
+                    width="26"
+                    height="26"
                     fill="currentColor"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 26 26"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
-                      clipRule="evenodd"
+                      fill-rule="evenodd"
+                      d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                      clip-rule="evenodd"
                     />
                   </svg>
                 </button>
@@ -169,10 +124,10 @@ const Layaout = () => {
           id="logo-sidebar"
           className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700`}
+          } bg-slate-200 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700`}
           aria-label="Sidebar"
         >
-          <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+          <div className="h-full px-3 pb-4 overflow-y-auto bg-slate-200 dark:bg-gray-800">
             <ul className="space-y-2 font-medium">
               <li>
                 <a
@@ -192,26 +147,7 @@ const Layaout = () => {
                   <span className="ms-3">SisDigera</span>
                 </a>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <svg
-                    className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 18 18"
-                  >
-                    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-                  </svg>
-                  <span className="flex-1 ms-3 whitespace-nowrap">
-                    Sisgepol
-                  </span>
-                </a>
-              </li>
-
+              <ListaMenu name="Sisgepol" subMenuArry={subMenuSisgepol} />
               <li>
                 <a
                   href="#"
@@ -307,7 +243,9 @@ const Layaout = () => {
           </div>
         </aside>
         <div className="p-4 sm:ml-64">
-          <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14"></div>
+          <div className="p-4 border-gray-400 rounded-lg mt-14">
+            <Outlet />
+          </div>
         </div>
       </>
     </>

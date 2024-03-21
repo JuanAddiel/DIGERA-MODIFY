@@ -12,13 +12,13 @@ CREATE TABLE `user` (
     `Id` INTEGER NOT NULL AUTO_INCREMENT,
     `Name` VARCHAR(200) NOT NULL,
     `Username` VARCHAR(100) NOT NULL,
-    `Pasword` VARCHAR(255) NOT NULL,
+    `Password` VARCHAR(255) NOT NULL,
     `Lastname` VARCHAR(200) NOT NULL,
     `RoleId` INTEGER NOT NULL,
 
-    INDEX `RoleId`(`RoleId`),
+    UNIQUE INDEX `user_Username_key`(`Username`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `user` ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`RoleId`) REFERENCES `roles`(`Id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE `user` ADD CONSTRAINT `user_RoleId_fkey` FOREIGN KEY (`RoleId`) REFERENCES `roles`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE;

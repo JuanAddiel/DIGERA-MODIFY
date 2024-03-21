@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const prisma = require("../utils/db.js");
+
 class AuthService {
   static async login({ username, password }) {
     try {
@@ -9,21 +10,30 @@ class AuthService {
           Username: username,
         },
       });
-
       if (!user) {
-        throw { status: 400, message: "Invalid username or password" };
+        throw { status: 404, message: "User not found" };
       }
-      const passwordMatch = await bcrypt.compare(password, user.Pasword);
 
+      const passwordMatch = await bcrypt.compare(password, user.Password);
       if (!passwordMatch) {
-        throw { status: 400, message: "Invalid username or password" };
-      }
+        throw { status: 401, message: "Invalid password" };
+      } 
 
       const response = await this.me({ user });
+      
 
-      return { token: response.token, data: response.user };
+
+      return { token: response.token, status: 200 };
     } catch (error) {
-      throw error;
+      let status = 500;
+      let message = "Internal Server Error";
+
+      if (error.status) {
+        status = error.status;
+        message = error.message;
+      }
+
+      throw { status, message };
     }
   }
 
@@ -38,68 +48,91 @@ class AuthService {
         },
       });
 
+      if (!userData) {
+        throw { status: 404, message: "User data not found" };
+      }
+
       const token = this.createJWT({
-        id: userData.Id,
+        Id: userData.Id,
         Username: userData.Username,
         Name: userData.Name,
-        Lastname: userData.Lastname,
-        Rol: userData.RoleId,
       });
+
       return { token, user: userData };
     } catch (error) {
-      throw error;
+      let status = 500;
+      let message = "Internal Server Error";
+      if (error.status) {
+        status = error.status;
+        message = error.message;
+      }
+
+      throw { status, message };
     }
   }
-
-  static async register({ Username, Name, Lastname, password, rolId }) {
+  static async register({ username, name, lastname, password, rolId }) {
     try {
-      const nameRegex = /^[a-zA-Z]+$/;
+      const passwordMinLength = 8;
+      const passwordRegex =
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
-      const user = await prisma.user.findFirst({
+      const usernameMinLength = 6;
+
+      const existingUser = await prisma.user.findUnique({
         where: {
-          Username,
+          Username: username,
         },
       });
 
-      if (user) {
-        return { status: 400, message: "UserName already exists" };
+      if (existingUser) {
+        throw { status: 400, message: "Username already exists" };
       }
-      if (!nameRegex.test(Name)) {
+
+      if (username.length < usernameMinLength) {
         throw {
           status: 400,
-          message: "The name only contain letters",
+          message: "Username must be at least 6 characters long",
         };
       }
-      if (!nameRegex.test(Lastname)) {
+      if (password.length < passwordMinLength) {
         throw {
           status: 400,
-          message: "The lastname only contain letters",
+          message: "Password must be at least 8 characters long",
         };
       }
 
-      if (!this.isPasswordSecure(password)) {
+      if (!passwordRegex.test(password)) {
         throw {
           status: 400,
           message:
-            "Invalid password. It must contain at least one lowercase letter, one digit, and be at least 8 characters long.",
+            "Password must contain at least one uppercase letter, one lowercase letter, and one number",
         };
       }
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const userCreated = await prisma.user.create({
         data: {
-          Username,
-          RoleId: rolId,
-          Pasword: hashedPassword,
-          Name,
-          Lastname,
+          Username: username,
+          RoleId: parseInt(3),
+          Password: hashedPassword,
+          Name: name,
+          Lastname: lastname,
         },
       });
 
-      const login = await this.login({ username: Username, password });
-      return login;
+      const loginResponse = await this.login({ username, password });
+
+      return loginResponse;
     } catch (error) {
-      throw error;
+      let status = 500;
+      let message = "Internal Server Error";
+
+      if (error.status) {
+        status = error.status;
+        message = error.message;
+      }
+
+      throw { status, message };
     }
   }
 
@@ -125,17 +158,31 @@ class AuthService {
 
   static async getUser({ id }) {
     try {
+
       const user = await prisma.user.findUnique({
         where: {
-          id: parseInt(id),
+          Id: parseInt(id),
         },
         include: {
           roles: true,
         },
       });
+
+      if (!user) {
+        throw { status: 404, message: "User not found" };
+      }
+
       return user;
     } catch (error) {
-      throw error;
+      let status = 500; // Internal Server Error por defecto
+      let message = "Internal Server Error";
+
+      if (error.status) {
+        status = error.status;
+        message = error.message;
+      }
+
+      throw { status, message };
     }
   }
 }

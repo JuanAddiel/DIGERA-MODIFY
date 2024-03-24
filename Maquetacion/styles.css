@@ -132,7 +132,7 @@ h2 {
     .container {
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
+        align-items: flex-start; /* Alinear verticalmente hacia arriba */
         justify-content: space-between;
     }
 
@@ -146,7 +146,6 @@ h2 {
 
     .btn-menu {
         order: 2;
-        margin-left: 82%;
         /* Ajustar el margen izquierdo según sea necesario o dejarlo en 0 para alinearlo a la izquierda */
         margin-top: 30px;
         /* Mueve el botón hacia abajo */
@@ -156,11 +155,16 @@ h2 {
 
     .col-md-4 {
         margin-left: 30px;
-        /* Ajustar el margen izquierdo según sea necesario o dejarlo en 0 para alinearlo a la izquierda */
+        /* Ajusta el margen izquierdo según sea necesario o dejarlo en 0 para alinearlo a la izquierda */
         width: 100%;
-        /* Hacer que las cards ocupen el ancho completo del contenedor */
+        /* Hace que los cards ocupen el ancho completo del contenedor */
 
     }
+    .bienvenida h2, .bienvenida h3{
+        font-size: 18px; /* Pone el tamaño de fuente más pequeño en dispositivos móviles */
+        margin-left: 19%;
 
+
+    }
 
 }

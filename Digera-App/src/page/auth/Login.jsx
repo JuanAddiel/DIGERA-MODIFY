@@ -21,7 +21,7 @@ export const Login = () => {
 
   useEffect(()=>{
     if(userInfo){
-      navigate('/poliza');
+      navigate('/dashboard');
     }
   },[navigate, userInfo]);
 
@@ -44,7 +44,7 @@ export const Login = () => {
   return (
     <>
       <section className="h-screen flex items-center justify-center image-opacity">
-        <div className="max-w-lg md:max-w-sm md:w-11/12 p-16 bg-white shadow-lg rounded-lg md:py-28 animate__animated animate__fadeInDown">
+        <div className="max-w-lg md:max-w-sm md:w-11/12 p-16 bg-slate-200 shadow-lg rounded-lg md:py-28 animate__animated animate__fadeInDown">
           <div className="text-center mb-5">
             <img
               className="mx-auto mb-5"
@@ -58,8 +58,8 @@ export const Login = () => {
             <div className="mb-4">
               <input
                 type="text"
-                className={`block w-full px-4 py-3 rounded-lg bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0`}
-                placeholder="Username"
+                className={`block w-full px-4 py-3 rounded-lg bg-white border-transparent focus:border-gray-500 focus:bg-white focus:ring-0`}
+                placeholder="Usuario"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -67,31 +67,18 @@ export const Login = () => {
             <div className="mb-4">
               <input
                 type="password"
-                className={`block w-full px-4 py-3 rounded-lg bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0`}
-                placeholder="Password"
+                className={`block w-full px-4 py-3 rounded-lg bg-white border-transparent focus:border-gray-500 focus:bg-white focus:ring-0`}
+                placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="mb-4 flex items-center">
-              <input
-                className="form-checkbox h-5 w-5 text-indigo-600"
-                type="checkbox"
-                value="remember-me"
-                id="flexCheckDefault"
-              />
-              <label
-                className="ml-2 text-sm text-gray-700"
-                htmlFor="flexCheckDefault"
-              >
-                Remember me
-              </label>
-            </div>
+           
             <button
-              className="bg-green-500 text-white px-4 py-3 rounded-lg w-full transition duration-300 ease-in-out hover:bg-green-600"
+              className="bg-aquamarine-900 text-white px-4 py-3 rounded-lg w-full transition duration-300 ease-in-out hover:bg-green-600"
               type="submit"
             >
-              Sign in
+              Iniciar Seccion
             </button>
           </form>
         </div>

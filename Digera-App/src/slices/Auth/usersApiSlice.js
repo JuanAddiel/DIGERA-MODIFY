@@ -11,6 +11,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    signUp: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/register`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     verifyToken: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/verifyToken`,
@@ -24,8 +31,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getAllUsers: builder.query({
+      query: ({
+        page,
+        limit,
+      }) => {
+        let url = `${USERS_URL}/getAll?page=${page}&limit=${limit}`;
+        return {
+          url,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
-export const { useLoginMutation, useVerifyTokenMutation, useLogoutSessionMutation } =
+export const { useLoginMutation, useVerifyTokenMutation, useLogoutSessionMutation, useSignUpMutation, useGetAllUsersQuery } =
   usersApiSlice;

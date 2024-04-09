@@ -4,6 +4,20 @@ const Response = require("../utils/response.js");
 const jwt = require('jsonwebtoken');
 
 class AuthController {
+  static async getAll(req, res) {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 5;
+
+    try {
+      const getAll = await AuthService.GetAll(page, limit);
+      return res.json(getAll);
+    } catch (error) {
+      return res.status(error.status || 500).json({
+        message: error.message || "Something goes wrong",
+        data: error,
+      });
+    }
+  }
   static async login(req, res) {
     const { username, password } = req.body;
     try {
@@ -13,14 +27,14 @@ class AuthController {
 
       const entityCreated = await AuthService.login({ username, password });
 
-        res.cookie("token", entityCreated.token, {
-          sameSite: "none", 
-          secure: true, 
-          httpOnly: true,
-        });
+      res.cookie("token", entityCreated.token, {
+        sameSite: "none",
+        secure: true,
+        httpOnly: true,
+      });
 
-        // Retornar la respuesta con el token
-        return res.json(Response.get("success", entityCreated));
+      // Retornar la respuesta con el token
+      return res.json(Response.get("success", entityCreated));
     } catch (error) {
       res.status(error.status || 500).json({
         message: error.message || "Something goes wrong",
@@ -29,13 +43,13 @@ class AuthController {
     }
   }
 
-  static async logout (req, res) {
-  res.cookie('token', '', {
-    httpOnly: true,
-    expires: new Date(0),
-  });
-  res.status(200).json({ message: 'Logged out successfully' });
-};
+  static async logout(req, res) {
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    res.status(200).json({ message: "Logged out successfully" });
+  }
 
   static async register(req, res) {
     const { username, password, name, lastname, rolId } = req.body;
@@ -92,6 +106,13 @@ class AuthController {
         where: {
           Id: user.id,
         },
+        include: {
+          roles: {
+            select: {
+              Name: true, // Seleccionar solo el campo 'Name' del rol
+            },
+          },
+        },
       });
       if (!userFound) {
         return res.status(401).json({ message: "Unauthorized" });
@@ -101,7 +122,7 @@ class AuthController {
       return res.json({
         id: userFound.Id,
         username: userFound.Username,
-        role: userFound.RoleId,
+        role: userFound.roles.Name,
         name: userFound.Name,
       });
     } catch (error) {

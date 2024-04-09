@@ -3,6 +3,52 @@ const jwt = require("jsonwebtoken");
 const prisma = require("../utils/db.js");
 
 class AuthService {
+  static async GetAll(page, limit) {
+    try {
+      page = parseInt(page);
+      limit = parseInt(limit);
+
+      const [total, users] = await Promise.all([
+        prisma.user.count(),
+        prisma.user.findMany({
+          include: {
+            roles: {
+              select: {
+                Name: true, // Seleccionar solo el campo 'Name' del rol
+              },
+            },
+          },
+          skip: (page - 1) * limit,
+          take: limit,
+        }),
+      ]);
+
+      const totalPages = Math.ceil(parseInt(total) / limit);
+
+      return {
+        total,
+        page,
+        limit,
+        totalPages,
+        next:
+          page < totalPages
+            ? `/api/user?page=${page + 1}&limit=${limit}`
+            : null,
+        prev: page > 1 ? `/api/user?page=${page - 1}&limit=${limit}` : null,
+        users: users.map((user) => ({
+          Id: user.Id,
+          Role: user.roles ? user.roles.Name : null, // Obtener el nombre del rol
+          Name: user.Name,
+          Lastname:user.Lastname,
+          Username: user.Username,
+        })),
+      };
+    } catch (err) {
+      console.log(err);
+      return { error: "An error occurred while fetching data" };
+    }
+  }
+
   static async login({ username, password }) {
     try {
       const user = await prisma.user.findUnique({
@@ -17,11 +63,9 @@ class AuthService {
       const passwordMatch = await bcrypt.compare(password, user.Password);
       if (!passwordMatch) {
         throw { status: 401, message: "Invalid password" };
-      } 
+      }
 
       const response = await this.me({ user });
-      
-
 
       return { token: response.token, status: 200 };
     } catch (error) {
@@ -113,7 +157,7 @@ class AuthService {
       const userCreated = await prisma.user.create({
         data: {
           Username: username,
-          RoleId: parseInt(3),
+          RoleId: parseInt(rolId),
           Password: hashedPassword,
           Name: name,
           Lastname: lastname,
@@ -158,7 +202,6 @@ class AuthService {
 
   static async getUser({ id }) {
     try {
-
       const user = await prisma.user.findUnique({
         where: {
           Id: parseInt(id),

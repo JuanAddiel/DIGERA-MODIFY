@@ -17,24 +17,70 @@ model roles {
 model user {
   Id       Int    @id @default(autoincrement())
   Name     String @db.VarChar(200)
-  Username String @db.VarChar(100) @unique
-  Password  String @db.VarChar(255)
+  Username String @unique @db.VarChar(100)
+  Password String @db.VarChar(255)
   Lastname String @db.VarChar(200)
   RoleId   Int
   roles    roles  @relation(fields: [RoleId], references: [Id], onDelete: Cascade)
+
+  @@index([RoleId], map: "user_RoleId_fkey")
 }
 
-model Rubros{
-  Id Int @id @default(autoincrement())
-  Productor String @db.VarChar(200)
-  Poliza String @db.VarChar(200)
-  Rubros String @db.VarChar(200)
-  Area String @db.VarChar(200)
-  CedulaRnc String @db.VarChar(200)
-  Prestamos String @db.VarChar(200)
-  Fecha_Emision DateTime
-  Total_Prima Float
-  PagoProducto Float
-  PagoGobierno Float
-  ValorAsegurado Float
+model polizas {
+  ProductosId    Int    @id
+  Provincia      String @db.VarChar(200)
+  Sucursal       String @db.VarChar(200)
+  nume           Int
+  Femision       String @db.VarChar(50)
+  Factura        String @db.VarChar(100)
+  Poliza         String @db.VarChar(100)
+  Prestamo       String @db.VarChar(100)
+  Cliente        String @db.VarChar(200)
+  Telefono       String @db.VarChar(50)
+  Cedula         String @db.VarChar(50)
+  Cesionario     String @db.VarChar(100)
+  area           Float
+  DescdelSeguro  Float
+  PrimaProductor Float
+  PagoGobierno   Float
+  TotalPrima     Float
+  ValAsegurado   Float
+  paquete_No     String @db.VarChar(100)
+  Fecha_pago     String @db.VarChar(100)
+  Intervalo      String @db.VarChar(200)
+  Longitud       String @db.VarChar(100)
+  Latitud        String @db.VarChar(100)
+  Fecha_Carga    String @db.VarChar(50)
+  Espera         String @db.VarChar(100)
+}
+
+model provincias {
+  numero_p      Int    @id
+  id_p          String @db.VarChar(20)
+  descripcion_p String @db.VarChar(200)
+}
+
+model rubros {
+  id             Int    @id
+  Identificacion String @db.VarChar(10)
+  name           String @db.VarChar(30)
+
+  @@index([id], map: "rubrosId")
+}
+
+model sucursal {
+  id   Int    @id
+  id_s String @db.VarChar(20)
+  name String @db.VarChar(200)
+  id_p String @db.VarChar(10)
+}
+
+model Paquete {
+  Id         Int    @id @default(autoincrement())
+  paquete_No String @db.VarChar(100)
+}
+
+model cesionarios {
+  Id         Int     @id @default(autoincrement())
+  Cesionario String? @db.VarChar(200)
 }
